@@ -259,20 +259,13 @@ function loadPdfForScheme(id, callback) {
   document.head.appendChild(s);
 }
 function loadAndShowPdf(id){
-  var btn=document.querySelector('#pdfSection_'+id+' button');
-  if(btn){btn.textContent='加载中...';btn.disabled=true;}
+  var sec=document.getElementById('pdfSection_'+id);
+  if(sec)sec.innerHTML='<div style="text-align:center;padding:20px;color:#8b7d6b">加载中...</div>';
   loadPdfForScheme(id,function(){
     var pi=uploadedPdfs[id]||pdfImgs[id];
     if(pi&&pi.length>0){
-      var sec=document.getElementById('pdfSection_'+id);
-      if(sec){
-        var h='<h3>方案完整内容（'+pi.length+'页）</h3>';
-        pi.forEach(function(pg){
-          h+='<div class="pdf-page"><img src="'+pg.img+'" loading="lazy" alt="第'+pg.page+'页">';
-          h+='<div class="pdf-page-num">第 '+pg.page+' 页</div></div>';
-        });
-        sec.innerHTML=h;
-      }
+      // Re-render the page with PDF data now available
+      goTo(currentIdx);
     }
   });
 }
@@ -594,6 +587,11 @@ function goTo(idx){
   document.getElementById('btnPrev').disabled=(idx===0);
   document.getElementById('btnNext').disabled=(idx===filteredSchemes.length-1);
   window.scrollTo(0,0);
+  // Auto-load PDF images for this scheme
+  var s=filteredSchemes[idx];
+  if(s&&!pdfImgs[s.id]&&!uploadedPdfs[s.id]&&!_pdfLoading[s.id]){
+    loadAndShowPdf(s.id);
+  }
 }
 function navPrev(){goTo(currentIdx-1);}
 function navNext(){goTo(currentIdx+1);}
