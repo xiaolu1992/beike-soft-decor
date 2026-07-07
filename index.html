@@ -140,6 +140,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei
 @media(max-width:768px){.sidebar{width:100%;position:relative;bottom:auto}.main{margin-left:0}.nav-bar{left:0;padding:10px 16px}}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="data/images.js"></script>
 <script>if(typeof pdfjsLib!=='undefined')pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';</script>
 </head>
 <body>
@@ -321,8 +322,7 @@ function saveStore(key,data){
 var schemeOverrides={};
 var imageOverrides={};
 
-// Async load uploaded space images
-(function(){var s=document.createElement('script');s.src='data/images.js';s.onload=function(){if(typeof currentIdx!=='undefined')goTo(currentIdx);};document.head.appendChild(s);})();
+
 var sourceFiles={};
 var uploadedPdfs={};
 var _idbLoaded=0;
